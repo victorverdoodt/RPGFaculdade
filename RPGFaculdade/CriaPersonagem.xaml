@@ -1,0 +1,62 @@
+﻿<Window x:Class="RPGFaculdade.CriaPersonagem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RPGFaculdade"
+        mc:Ignorable="d"
+        Title="CriaPersonagem" Height="400" Width="400">
+    <Grid Margin="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0"
+               Grid.ColumnSpan="2"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               Content="Create a new character"/>
+        <!-- Character creation controls -->
+        <Label Grid.Row="1" Grid.Column="0"
+               FontWeight="Bold"
+               Content="Name:"/>
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 Width="250"
+                 HorizontalAlignment="Left"
+                 Text="{Binding Name}"/>
+        <Label Grid.Row="2" Grid.Column="0"
+               FontWeight="Bold"
+               Content="Class:"/>
+        <ListBox Grid.Row="2" Grid.Column="1"
+                 Width="250"
+                 HorizontalAlignment="Left"
+                 SelectedValue="{Binding Class}" SelectedValuePath="Content">
+            <ListBoxItem Content="Guerreiro"></ListBoxItem>
+            <ListBoxItem Content="Arqueiro"></ListBoxItem>
+            <ListBoxItem Content="Mago"></ListBoxItem>
+        </ListBox>
+
+        <Grid Grid.Row="4" Grid.Column="0"
+                  Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                    Margin="0,0,0,5"
+                    Width="125"
+                    Content="Use this player"
+                    Click="UseThisPlayer_OnClick" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

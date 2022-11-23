@@ -1,0 +1,137 @@
+﻿<Window x:Class="RPGFaculdade.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RPGFaculdade"
+        xmlns:my="clr-namespace:RPGFaculdade.Components.Creatures" 
+        xmlns:viewmodels="clr-namespace:RPGFaculdade.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:Engine}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="900" ResizeMode="NoResize" x:Name="MainWin">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Grid.Row="0" Grid.Column="0" x:Name="PlayerSlot" DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+            <my:CreatureUI HealthText="{Binding ActPlayer.ActualHealth}" AttackText="{Binding ActPlayer.BaseAttack}" NameText="{Binding ActPlayer.Name}" Sprite="{Binding ActPlayer.Sprite}"/>
+            <ComboBox ItemsSource="{Binding ActPlayer.Equipments}" SelectedItem="{Binding ActWeapon}" DisplayMemberPath="Name" SelectedValuePath="ID"/>
+            <Button Content="Attack" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="120" Margin="0,0,0,0"/>
+        </StackPanel>
+        <TabControl Grid.Row="0" Grid.Column="1">
+            <TabItem Header="Bolsa">
+                <DataGrid ItemsSource="{Binding ActPlayer.Equipments}"
+                              AutoGenerateColumns="False"
+                              HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Descrição"
+                                                Binding="{Binding Name}"
+                                                Width="*"/>
+                        <DataGridTextColumn Header="Ataque"
+                                                Binding="{Binding Attack}"
+                                                Width="*"/>
+                        <DataGridTextColumn Header="Defesa"
+                                                Binding="{Binding Defense}"
+                                                Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="0" Grid.Column="2" x:Name="MonsterPanel" DockPanel.Dock="Right" Orientation="Horizontal" Margin="10" Width="380" Height="180">
+            <StackPanel>
+                <my:CreatureUI Margin="2" HealthText="{Binding Creatures[0].ActualHealth}" NameText="{Binding Creatures[0].Name}" Sprite="{Binding Creatures[0].Sprite}" AttackText="{Binding Creatures[0].BaseAttack}"/>
+                <Button x:Name="Button0" Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Target0_Click" Width="115" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel>
+                <my:CreatureUI Margin="2" HealthText="{Binding Creatures[1].ActualHealth}" NameText="{Binding Creatures[1].Name}" Sprite="{Binding Creatures[1].Sprite}" AttackText="{Binding Creatures[1].BaseAttack}"/>
+                <Button x:Name="Button1" Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Target1_Click" Width="115" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel>
+                <my:CreatureUI Margin="2" HealthText="{Binding Creatures[2].ActualHealth}" NameText="{Binding Creatures[2].Name}" Sprite="{Binding Creatures[2].Sprite}" AttackText="{Binding Creatures[2].BaseAttack}"/>
+                <Button x:Name="Button2" Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Target2_Click" Width="115" Margin="5,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+
+
+        <Border Grid.Row="1" Grid.Column="2"
+                    Grid.RowSpan="2"
+                    BorderBrush="Gainsboro"
+                    BorderThickness="1">
+            <RichTextBox x:Name="GameMessages"
+                             Background="Beige"
+                             VerticalScrollBarVisibility="Auto">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+
+        </Border>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="1" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveNorth"
+                        Content="Norte"/>
+            <Button Grid.Row="1" Grid.Column="0" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveWest"
+                        Content="Oeste"/>
+            <Button Grid.Row="1" Grid.Column="2" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveEast"
+                        Content="Leste"/>
+            <Button Grid.Row="2" Grid.Column="1" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveSouth"
+                        Content="Sul"/>
+        </Grid>
+        <Border Grid.Row="1" Grid.Column="1"
+                    BorderBrush="Gainsboro"
+                    BorderThickness="1">
+
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                               HorizontalAlignment="Center"
+                               Text="{Binding ActPos.Nome}"/>
+
+                <Image Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="125"
+                           Width="125"
+                           Source="{Binding ActPos.Image}"/>
+
+                <TextBlock Grid.Row="2"
+                               HorizontalAlignment="Center"
+                               Text="{Binding ActPos.Nome}"
+                               TextWrapping="Wrap"/>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</Window>
